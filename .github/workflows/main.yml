@@ -10,17 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js 18.x
+      - name: Setup Node.js (sin chequeo de dependencias)
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           cache: 'npm'
+          check-latest: true
 
-      - name: Instalar Surge (versión estable)
-        run: npm install -g surge@latest
+      - name: Instalar Surge (modo global)
+        run: npm install --global surge@latest --ignore-scripts
 
       - name: Desplegar en Surge
-        run: surge --project ./ --domain ${{ secrets.SURGE_DOMAIN }}.surge.sh
+        run: |
+          echo "=== Iniciando despliegue ==="
+          surge ./ --domain ${{ secrets.SURGE_DOMAIN }}.surge.sh
         env:
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
