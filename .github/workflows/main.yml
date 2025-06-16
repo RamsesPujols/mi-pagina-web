@@ -1,4 +1,4 @@
-echo 'name: Despliegue en Surge.sh
+name: Despliegue en Surge.sh
 
 on:
   push:
