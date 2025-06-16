@@ -7,15 +7,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Instalar Surge
-      run: npm install -g surge
-      
-    - name: Desplegar en Surge
-      run: surge ./ --domain ${{ secrets.SURGE_DOMAIN }}.surge.sh
-      env:
-        SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}' > .github/workflows/main.yaml
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar Surge
+        run: npm install -g surge
+
+      - name: Desplegar en Surge
+        run: npx surge ./ --domain ${{ secrets.SURGE_DOMAIN }}.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
