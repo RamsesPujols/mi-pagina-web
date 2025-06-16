@@ -2,7 +2,7 @@ name: Despliegue en Surge.sh
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   deploy:
@@ -10,17 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node.js (modo mínimo)
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          cache: 'false'  # Desactiva la búsqueda de dependencias
-
       - name: Instalar Surge
-        run: npm install --global surge --no-package-lock  # Evita crear package-lock.json
+        run: npm install -g surge@latest
 
-      - name: Desplegar en Surge
-        run: surge ./ --domain ${{ secrets.SURGE_DOMAIN }}.surge.sh
-        env:
-          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+      - name: Desplegar
+        run: surge ./ --domain ${{ secrets.SURGE_DOMAIN }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
